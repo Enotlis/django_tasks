@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>####</title>
+    <style>
+        ul.horizon_list{
+            margin: 3px;
+            padding: 3px;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <ul class="horizon_list">
+        <table>
+                {% if user.is_authenticated %}
+            <td>
+                <form action="{% url 'logout' %}">
+                    <button type="submit">Выйти</button>
+                </form>
+            </td>
+            {% else %}
+            <td>
+                <form action="{% url 'register' %}">
+                    <button type="submit">Зарегистрироваться</button>
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'login' %}">
+                    <button type="submit">Войти</button>
+                </form>
+            </td>
+            {% endif %}
+        </table>
+    </ul>
+<div>
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>

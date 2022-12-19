@@ -1,0 +1,61 @@
+﻿{% extends "basic.html" %}
+{% block content %}
+<div>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <button type="submit">Поиск</button>
+    </form>
+</div>
+<form action="{% url 'generate' %}">
+    <button type="submit">Сгенерировать карты</button>
+</form>
+<form action="{% url 'check_date_activity_card' %}">
+    <button type="submit">Проверка срока действия карт</button>
+</form>
+<div>
+    <table>
+        <tr>
+            <th scope="col">Серия</th>
+            <th scope="col">Номер</th>
+            <th scope="col">Дата выпуска</th>
+            <th scope="col">Дата окончания</th>
+            <th scope="col">Статус</th>
+        </tr>
+        {% for card in cards_list %}
+        <tr>
+            <td align="center">{{ card.series }}</td>
+            <td align="center">{{ card.number }}</td>
+            <td align="center">{{ card.date_issue }}</td>
+            <td align="center">{{ card.date_end_activity }}</td>
+            <td align="center">{{ card.status }}</td>
+            <td>
+                <form action="{% url 'show_profile_card' pk=card.pk %}">
+                    <button type="submit">Открыть профиль</button>
+                </form>
+            </td>
+            {% if card.status == "активирована" %}
+            <td>
+                <form action="{% url 'deactivate_card' pk=card.pk %}">
+                    <button type="submit">Деактивировать</button>
+                </form>
+            </td>
+            {% elif card.status == "не активирована" %}
+            <td>
+                <form action="{% url 'activate_card' pk=card.pk %}">
+                    <button type="submit">Активировать</button>
+                </form>
+            </td>
+            {% endif %}
+            <td>
+                <form action="{% url 'delete_creditcard' pk=card.pk %}">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+            {% empty %}
+            <td>Нет данных</td>
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+﻿{% extends "basic.html" %}
+{% block content %}
+
+<div>
+    <table>
+        {% for object in objects_list %}
+        <tr>
+            <td>
+                <p style="font-size: 20px">
+                    <a href="{% url 'start_test' pk=object.pk %}" >{{ object.name }}</a>
+                </p>
+            </td>
+        {% empty %}
+            <td>Нет тестов</td>
+        {% endfor %}
+        </tr>
+    </table>
+</div>
+
+{% endblock %}

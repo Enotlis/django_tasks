@@ -1,0 +1,10 @@
+﻿{% extends "basic.html" %}
+{% block content %}
+
+<p>Количество верных ответов: {{ result.count_correct_answer }}</p>
+<p>Процент верных ответов: {{ result.percent_correct_answer }}%</p>
+
+<form action="{% url 'get_testsuit' %}">
+    <button type="submit">Выбрать другой тест</button>
+</form>
+{% endblock %}

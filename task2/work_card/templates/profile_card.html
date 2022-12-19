@@ -1,0 +1,32 @@
+﻿{% extends "basic.html" %}
+{% block content %}
+<form action="{% url 'get_creditcards' %}">
+    <button type="submit">Назад</button>
+</form>
+<div>
+    <p>Серия: {{ card.series }} Номер: {{ card.number }}</p>
+    <p>Дата выпуска карты: {{ card.date_issue }} Дата окончания действия карты: {{ card.date_end_activity }}</p>
+    <p>Статус: {{ card.status }}</p>
+</div>
+<form action="{% url 'delete_creditcard' pk=card.pk %}">
+    <button type="submit">Удалить</button>
+</form>
+<div>
+    <table>
+        <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Дата покупки</th>
+        </tr>
+        {% for purchase in card.purchase_set.all %}
+        <tr>
+            <td align="center">{{ purchase.name_product }}</td>
+            <td align="center">{{ purchase.price }}</td>
+            <td align="center">{{ purchase.date_purchase }}</td>
+            {% empty %}
+            <td>Нет покупок</td>
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+{% endblock %}
